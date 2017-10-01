@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 配置作业类 -->
+    <bean name="exampleJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.yp.ExampleJob"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="timeout" value="50"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="exampleJobTrigger"
+          class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="exampleJobDetail" />
+        <!-- 延迟触发时间，延迟10秒进行触发 -->
+        <property name="startDelay" value="10000" />
+        <!-- 重复触发的时间间隔，5秒 -->
+        <property name="repeatInterval" value="5000" />
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="exampleJobTrigger" />
+            </list>
+        </property>
+    </bean>
+</beans>
