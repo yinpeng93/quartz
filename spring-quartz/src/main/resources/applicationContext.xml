@@ -11,14 +11,20 @@
             </map>
         </property>
     </bean>
-    <bean id="exampleJobTrigger"
+    <bean id="exampleJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="exampleJobDetail"/>
+        <!--两秒执行一次任务-->
+        <property name="cronExpression" value="0/2 * * ? * *"/>
+    </bean>
+    <!--<bean id="exampleJobTrigger"
           class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
         <property name="jobDetail" ref="exampleJobDetail" />
-        <!-- 延迟触发时间，延迟10秒进行触发 -->
+        &lt;!&ndash; 延迟触发时间，延迟10秒进行触发 &ndash;&gt;
         <property name="startDelay" value="10000" />
-        <!-- 重复触发的时间间隔，5秒 -->
+        &lt;!&ndash; 重复触发的时间间隔，5秒 &ndash;&gt;
         <property name="repeatInterval" value="5000" />
-    </bean>
+    </bean>-->
+
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
